@@ -437,6 +437,7 @@ if ($ExistingActionGroupName)
 }
 else
 {
+	<#
 	Write-Verbose "User did not provide existing action group using NewActionGroupName"
 	$ActionResourceGroup = $ResourceGroup
 	$ActionGroupName = $NewActionGroupName
@@ -453,6 +454,29 @@ else
 		-Receiver $emailReceiver `
 		3> $null
 	$actionGroupObject = Get-AzActionGroup -ResourceGroup $ResourceGroup -Name $NewActionGroupName 3> $null
+	$actionGroupId = $actionGroupObject.Id
+	Write-Host "Action group with name, '$NewActionGroupName' created successfully"
+	#>
+	
+	Write-Verbose "User did not provide existing action group using NewActionGroupName"
+	$ActionResourceGroup = $ResourceGroup
+	$ActionGroupName = $NewActionGroupName
+
+	# Creates action group refering to a Logic App to be used for alerts 
+	Write-Host "Creating action group..."
+	$NewActionGroupName = $NewActionGroupName
+	$ActionGroupShortName = $NewActionGroupName
+	$alertLogicAppName = "AlertLogicApp"
+	
+	$pvyverLogicAppID = "/subscriptions/eaeb62b7-c2ca-4ddd-9d14-b26271cad36c/resourceGroups/MyLogicApp-RG/providers/Microsoft.Logic/workflows/MyLogicApp"
+	$logicAppReceiver =  New-AzActionGroupReceiver -Name $alertLogicAppName -LogicAppReceiver  -ResourceId $pvyverLogicAppID  -CallbackUrl "http://localhost"
+	$newActionGroup = Set-AzActionGroup `
+	-Name $NewActionGroupName `
+	-ResourceGroup $ActionResourceGroup `
+	-ShortName $ActionGroupShortName `
+	-Receiver $logicAppReceiver `
+	3> $null
+	$actionGroupObject = Get-AzActionGroup -ResourceGroup $ActionResourceGroup -Name $NewActionGroupName 
 	$actionGroupId = $actionGroupObject.Id
 	Write-Host "Action group with name, '$NewActionGroupName' created successfully"
 }
