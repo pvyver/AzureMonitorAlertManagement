@@ -1,3 +1,7 @@
+![Workflow](/docs/images/Diagram.png)
+
+
+
 # Alert ToolKit
 1. [Overview](#overview)
 1. [Prerequisites](#prerequisites)
