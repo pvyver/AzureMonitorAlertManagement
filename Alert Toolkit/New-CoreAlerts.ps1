@@ -457,7 +457,7 @@ else
 	$actionGroupId = $actionGroupObject.Id
 	Write-Host "Action group with name, '$NewActionGroupName' created successfully"
 	#>
-	
+
 	Write-Verbose "User did not provide existing action group using NewActionGroupName"
 	$ActionResourceGroup = $ResourceGroup
 	$ActionGroupName = $NewActionGroupName
@@ -588,8 +588,6 @@ foreach ($alert in $alertlist){
 	try
 	{
 		$alertConfig = get-content .\MyAlertConfig.json | ConvertFrom-Json
-		$plain = $alertConfig.Alerts.AlertDefinition.AzNsNotification.CustomJSONpayload | ConvertTo-Json 
-		$string = $plain.ToString()
 
 		#$customPayload = '{"team":"OSTeam","type":"OS"}'
 		Write-Verbose "Action Group ID: $actionGroupId"
