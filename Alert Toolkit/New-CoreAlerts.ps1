@@ -24,10 +24,11 @@
 		Specifies the type(s) of alerts to be deployed.
 	.Parameter ConfigPath
 		Specifies the path to the JSON file containing the alert configurations. Default is '.\DefaultAlertConfig.json'.
+	.Parameter alertLogicAppName
+		Specifies the name of an existing Logic App to be added to the action group by this toolkit.
 	.EXAMPLE 
 	   .\New-CoreAlerts.ps1 -SubscriptionId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -WorkspaceName 'alertsWorkspace' -ResourceGroup 'alertsRG' -Location 'East US'
-	   .\New-CoreAlerts.ps1 -SubscriptionId 'eaeb62b7-c2ca-4ddd-9d14-b26271cad36c' -WorkspaceName 'LA-PVYVER-001' -ResourceGroup 'czeus-inf-pr-rgp-01' -Location 'East US' -ConfigPath .\MyAlertConfig.json -ExistingActionGroupName LA-PVYVER-001-email-ag1
-	  
+
 	   This command will run the Alert Toolkit script with the provided parameters.
 	   
 	.EXAMPLE
@@ -39,6 +40,10 @@
 	   .\New-CoreAlerts.ps1 -SubscriptionId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -ExistingActionGroupName 'useractiongroupname' -WorkspaceName 'alertsWorkspace' -ResourceGroup 'alertsRG' -Location 'East US' 
 	   
 	   This command will run the Alert Toolkit script with the provided parameters, adding the existing action group named 'useractiongroupname' to all alerts created by the toolkit.
+	   
+	.EXAMPLE
+	    .\New-CoreAlerts.ps1 -SubscriptionId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -WorkspaceName 'alertsWorkspace' -ResourceGroup 'alertsRG' -Location 'East US' -ConfigPath .\MyAlertConfig.json -alertLogicAppName myLogicApp  
+	   This command will run the Alert Toolkit script with the provided parameters, adding the existing Logic App named 'myLogicApp' to the ActionGroup.
 	   
 	.EXAMPLE
 		.\New-CoreAlerts.ps1 -SubscriptionId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -WorkspaceName 'alertsWorkspace' -ResourceGroup 'alertsRG' -Location 'East US' -AlertTypes "Core,SQL"
@@ -78,6 +83,9 @@ param (
 
 	[Parameter(Mandatory=$false)]
 	[string]$ExistingActionGroupName,
+
+	[Parameter(Mandatory=$false)]
+	[string]$alertLogicAppName,
 
 	[Parameter(Mandatory=$false)]
 	[string]$AlertEmailAddress,
@@ -383,10 +391,10 @@ catch
 
 
 # Prompt user if no alert email address was provided.
-if (!$AlertEmailAddress -and !$ExistingActionGroupName)
-{
-	$AlertEmailAddress = Read-Host -Prompt "`nEnter the email address to be subscribed for alerts"
-}
+#if (!$AlertEmailAddress -and !$ExistingActionGroupName)
+#{
+#	$AlertEmailAddress = Read-Host -Prompt "`nEnter the email address to be subscribed for alerts"
+#}
 
 # Retrieve alert config data from configuration file and convert from JSON to PowerShell object
 $alertConfig = (Get-Content $ConfigPath) | ConvertFrom-Json
@@ -410,7 +418,7 @@ if (!$apiversion)
 # Derive an action group name from the workspace name if none is provided
 if (!$NewActionGroupName)
 {
-	$NewActionGroupName = "$($WorkspaceName)-email-ag1"
+	$NewActionGroupName = "$($WorkspaceName)-ag1"
 	Write-Verbose "No action group name defined by user. Action group name will be '$NewActionGroupName'"
 }
 
@@ -465,11 +473,9 @@ else
 	# Creates action group refering to a Logic App to be used for alerts 
 	Write-Host "Creating action group..."
 	$NewActionGroupName = $NewActionGroupName
-	$ActionGroupShortName = $NewActionGroupName
-	$alertLogicAppName = "AlertLogicApp"
 	
-	$pvyverLogicAppID = "/subscriptions/eaeb62b7-c2ca-4ddd-9d14-b26271cad36c/resourceGroups/MyLogicApp-RG/providers/Microsoft.Logic/workflows/MyLogicApp"
-	$logicAppReceiver =  New-AzActionGroupReceiver -Name $alertLogicAppName -LogicAppReceiver  -ResourceId $pvyverLogicAppID  -CallbackUrl "http://localhost"
+	$alertLogicApp = Get-AzLogicApp -Name $alertLogicAppName
+	$logicAppReceiver =  New-AzActionGroupReceiver -Name $alertLogicAppName -LogicAppReceiver  -ResourceId $alertLogicApp.Id -CallbackUrl "http://localhost"
 	$newActionGroup = Set-AzActionGroup `
 	-Name $NewActionGroupName `
 	-ResourceGroup $ActionResourceGroup `

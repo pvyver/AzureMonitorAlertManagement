@@ -88,7 +88,23 @@
             "/subscriptions/subscrname/resourcegroups/resourcegrp/providers/microsoft.insights/actiongroups/samplecoreactiongroup"
           ],
           "CustomEmailSubject": "Alert - Low Disk Space Windows",
-          "CustomJSONpayload":[{"team":"OSTeam","What":"Awesome"}]   
+          "CustomJSONpayload":[ {
+            "AlertRuleName":"#alertrulename",
+            "Severity":"#severity",
+            "AlertThresholdOperator":"#thresholdoperator",
+            "AlertThresholdValue":"#thresholdvalue",
+            "LinkToSearchResults":"#linktosearchresults",
+            "ResultCount":"#searchresultcount",
+            "Search Interval End time":"#searchintervalendtimeutc",
+            "Search Interval":"#searchinterval",
+            "Search Interval StartTime":"#searchintervalstarttimeutc",
+            "SearchQuery":"#searchquery",
+            "IncludeSearchResults": true,
+            "Alert Type":"#alerttype",
+            "WorkspaceID":"#workspaceid",
+            "Application ID":"#applicationid",
+            "Subscription ID":"#subscriptionid"
+            }    ]   
         }
       }
     },
@@ -124,7 +140,23 @@
             "/subscriptions/subscrname/resourcegroups/resourcegrp/providers/microsoft.insights/actiongroups/samplecoreactiongroup"
           ],
           "CustomEmailSubject": "Alert - Low Memory",
-          "CustomJSONpayload":[{"team":"OSTeam","What":"Awesome"}]   
+          "CustomJSONpayload":[ {
+            "AlertRuleName":"#alertrulename",
+            "Severity":"#severity",
+            "AlertThresholdOperator":"#thresholdoperator",
+            "AlertThresholdValue":"#thresholdvalue",
+            "LinkToSearchResults":"#linktosearchresults",
+            "ResultCount":"#searchresultcount",
+            "Search Interval End time":"#searchintervalendtimeutc",
+            "Search Interval":"#searchinterval",
+            "Search Interval StartTime":"#searchintervalstarttimeutc",
+            "SearchQuery":"#searchquery",
+            "IncludeSearchResults": true,
+            "Alert Type":"#alerttype",
+            "WorkspaceID":"#workspaceid",
+            "Application ID":"#applicationid",
+            "Subscription ID":"#subscriptionid"
+            }    ]   
         }
       }
     },
@@ -160,7 +192,23 @@
             "/subscriptions/subscrname/resourcegroups/resourcegrp/providers/microsoft.insights/actiongroups/samplecoreactiongroup"
           ],
           "CustomEmailSubject": "Alert - NTFS - File System Corrupt",
-          "CustomJSONpayload":[{"team":"OSTeam","What":"Awesome"}]     
+          "CustomJSONpayload":[ {
+            "AlertRuleName":"#alertrulename",
+            "Severity":"#severity",
+            "AlertThresholdOperator":"#thresholdoperator",
+            "AlertThresholdValue":"#thresholdvalue",
+            "LinkToSearchResults":"#linktosearchresults",
+            "ResultCount":"#searchresultcount",
+            "Search Interval End time":"#searchintervalendtimeutc",
+            "Search Interval":"#searchinterval",
+            "Search Interval StartTime":"#searchintervalstarttimeutc",
+            "SearchQuery":"#searchquery",
+            "IncludeSearchResults": true,
+            "Alert Type":"#alerttype",
+            "WorkspaceID":"#workspaceid",
+            "Application ID":"#applicationid",
+            "Subscription ID":"#subscriptionid"
+            }    ]     
         }
       }
     },
@@ -196,7 +244,23 @@
             "/subscriptions/subscrname/resourcegroups/resourcegrp/providers/microsoft.insights/actiongroups/samplecoreactiongroup"
           ],
           "CustomEmailSubject": "Alert - Unexpected shutdown",
-          "CustomJSONpayload":[{"team":"OSTeam","What":"Awesome"}]    
+          "CustomJSONpayload":[ {
+            "AlertRuleName":"#alertrulename",
+            "Severity":"#severity",
+            "AlertThresholdOperator":"#thresholdoperator",
+            "AlertThresholdValue":"#thresholdvalue",
+            "LinkToSearchResults":"#linktosearchresults",
+            "ResultCount":"#searchresultcount",
+            "Search Interval End time":"#searchintervalendtimeutc",
+            "Search Interval":"#searchinterval",
+            "Search Interval StartTime":"#searchintervalstarttimeutc",
+            "SearchQuery":"#searchquery",
+            "IncludeSearchResults": true,
+            "Alert Type":"#alerttype",
+            "WorkspaceID":"#workspaceid",
+            "Application ID":"#applicationid",
+            "Subscription ID":"#subscriptionid"
+            }    ]    
         }
       }
     }
@@ -313,18 +377,6 @@
     },
     {
       "EventLogName": "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational",
-      "Error": true,
-      "Warning": true,
-      "Information": true
-    },
-    {
-      "EventLogName": "Microsoft-Windows-VHDMP/Operational",
-      "Error": true,
-      "Warning": true,
-      "Information": true
-    },
-    {
-      "EventLogName": "MSNIPAK",
       "Error": true,
       "Warning": true,
       "Information": true
