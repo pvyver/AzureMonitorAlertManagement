@@ -2,7 +2,7 @@
 
 ## Create Table
 
-```c
+```json
  .create table Alerts (
 AlertRuleName: string, 
 Severity: string, 
