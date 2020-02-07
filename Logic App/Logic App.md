@@ -2,7 +2,6 @@
 
 ## Code
 
- highlighting	
 ```json
 {
     "definition": {
